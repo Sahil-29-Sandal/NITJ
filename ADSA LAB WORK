@@ -1,0 +1,418 @@
+# PROGRAM FOR LINEAR SEARCH
+
+def linear_Search(list1, n, key):  
+  
+    
+    for i in range(0, n):  
+        if (list1[i] == key):  
+            return i  
+    return -1  
+  
+  
+list1 = [1 ,3, 5, 4, 7, 9]  
+key = 7  
+  
+n = len(list1)  
+res = linear_Search(list1, n, key)  
+if(res == -1):  
+    print("Element not found")  
+else:  
+    print("Element found at index: ", res)  
+............................................................................................................................
+
+ # PROGRAM FOR BINARY SEARCH
+def binary_search(list1, n):  
+    low = 0  
+    high = len(list1) - 1  
+    mid = 0  
+  
+    while low <= high:  
+         
+        mid = (high + low) // 2  
+  
+         
+        if list1[mid] < n:  
+            low = mid + 1  
+  
+        
+        elif list1[mid] > n:  
+            high = mid - 1  
+  
+            return mid  
+  
+             
+    return -1  
+  
+  
+# Initial list1  
+list1 = [12, 24, 32, 39, 45, 50, 54]  
+n = 45  
+  
+
+result = binary_search(list1, n)  
+  
+if result != -1:  
+    print("Element is present at index", str(result))  
+else:  
+    print("Element is not present in list1")  
+....................................................................................................................................
+# PROGRAM FOR BUBBLE SORT
+def bubble_sort(arr):  
+    n = len(arr)  
+  
+   
+    for i in range(n):  
+       
+        for j in range(0, n-i-1):  
+            
+            if arr[j] > arr[j+1]:  
+                arr[j], arr[j+1] = arr[j+1], arr[j]  
+  
+# Example usage  
+if __name__ == "__main__":  
+   
+    sample_list = [64, 34, 25, 12, 22, 11, 90]  
+  
+    
+    print("Original List:", sample_list)  
+  
+   
+    bubble_sort(sample_list)  
+  
+      
+    print("Sorted List:", sample_list)  
+........................................................................................................................................................
+# PROGRAM FOR SELECTION SORT
+def selection_sort(array):  
+    length = len(array)  
+      
+    for i in range(length-1):  
+        minIndex = i  
+          
+        for j in range(i+1, length):  
+            if array[j]<array[minIndex]:  
+                minIndex = j  
+                  
+        array[i], array[minIndex] = array[minIndex], array[i]  
+          
+          
+    return array      
+array = [21,6,9,33,3]  
+  
+print("The sorted array is: ", selection_sort(array))  
+..........................................................................................................................................
+
+# PROGRAM FOR BINARY SEARCH TREE
+class Node:
+    def __init__(self, key):
+        self.key = key
+        self.left = None
+        self.right = None
+
+
+class BinarySearchTree:
+    def __init__(self):
+        self.root = None
+
+    def insert(self, key):
+        """Insert a node with the given key."""
+        if self.root is None:
+            self.root = Node(key)
+        else:
+            self._insert(self.root, key)
+
+    def _insert(self, node, key):
+        if key < node.key:
+            if node.left is None:
+                node.left = Node(key)
+            else:
+                self._insert(node.left, key)
+        elif key > node.key:
+            if node.right is None:
+                node.right = Node(key)
+            else:
+                self._insert(node.right, key)
+
+    def search(self, key):
+        """Search for a node with the given key."""
+        return self._search(self.root, key)
+
+    def _search(self, node, key):
+        if node is None or node.key == key:
+            return node
+        if key < node.key:
+            return self._search(node.left, key)
+        return self._search(node.right, key)
+
+    def delete(self, key):
+        """Delete a node with the given key."""
+        self.root = self._delete(self.root, key)
+
+    def _delete(self, node, key):
+        if node is None:
+            return node
+
+        if key < node.key:
+            node.left = self._delete(node.left, key)
+        elif key > node.key:
+            node.right = self._delete(node.right, key)
+        else:
+            
+            if node.left is None:
+                return node.right
+            elif node.right is None:
+                return node.left
+
+           
+            temp = self._min_value_node(node.right)
+            node.key = temp.key
+            node.right = self._delete(node.right, temp.key)
+
+        return node
+
+    def _min_value_node(self, node):
+        current = node
+        while current.left is not None:
+            current = current.left
+        return current
+
+    def inorder_traversal(self):
+        """Return an in-order traversal of the tree."""
+        return self._inorder_traversal(self.root)
+
+    def _inorder_traversal(self, node):
+        if node is None:
+            return []
+        return (self._inorder_traversal(node.left) +
+                [node.key] +
+                self._inorder_traversal(node.right))
+
+    def preorder_traversal(self):
+        """Return a pre-order traversal of the tree."""
+        return self._preorder_traversal(self.root)
+
+    def _preorder_traversal(self, node):
+        if node is None:
+            return []
+        return ([node.key] +
+                self._preorder_traversal(node.left) +
+                self._preorder_traversal(node.right))
+
+    def postorder_traversal(self):
+        """Return a post-order traversal of the tree."""
+        return self._postorder_traversal(self.root)
+
+    def _postorder_traversal(self, node):
+        if node is None:
+            return []
+        return (self._postorder_traversal(node.left) +
+                self._postorder_traversal(node.right) +
+                [node.key])
+
+    def display(self, node=None, level=0, prefix="Root:"):
+        """Display the tree structure."""
+        if node is None:
+            node = self.root
+        if node is not None:
+            print(" " * (level * 4) + prefix + str(node.key))
+            if node.left or node.right:
+                if node.left:
+                    self.display(node.left, level + 1, "L---")
+                else:
+                    print(" " * ((level + 1) * 4) + "L---None")
+                if node.right:
+                    self.display(node.right, level + 1, "R---")
+                else:
+                    print(" " * ((level + 1) * 4) + "R---None")
+
+
+# Example Usage
+if __name__ == "__main__":
+    bst = BinarySearchTree()
+    keys = [50, 30, 70, 20, 40, 60, 80]
+
+    print("Inserting keys:")
+    for key in keys:
+        bst.insert(key)
+    bst.display()
+
+    print("\nIn-order Traversal:", bst.inorder_traversal())
+    print("Pre-order Traversal:", bst.preorder_traversal())
+    print("Post-order Traversal:", bst.postorder_traversal())
+
+    print("\nSearching for 40:", "Found" if bst.search(40) else "Not Found")
+    print("Searching for 90:", "Found" if bst.search(90) else "Not Found")
+
+    print("\nDeleting 50...")
+    bst.delete(50)
+    bst.display()
+
+    print("In-order Traversal after deletion:", bst.inorder_traversal())
+..............................................................................................................................................................................
+# PROGRAM FOE AVL TREE
+class Node:
+    def __init__(self, key):
+        self.key = key
+        self.left = None
+        self.right = None
+        self.height = 1  # Height of the node
+
+
+class AVLTree:
+    def get_height(self, node):
+        if not node:
+            return 0
+        return node.height
+
+    def get_balance(self, node):
+        if not node:
+            return 0
+        return self.get_height(node.left) - self.get_height(node.right)
+
+    def rotate_right(self, y):
+        x = y.left
+        T2 = x.right
+
+        
+        x.right = y
+        y.left = T2
+
+       
+        y.height = 1 + max(self.get_height(y.left), self.get_height(y.right))
+        x.height = 1 + max(self.get_height(x.left), self.get_height(x.right))
+
+        return x
+
+    def rotate_left(self, x):
+        y = x.right
+        T2 = y.left
+
+       
+        y.left = x
+        x.right = T2
+
+        x.height = 1 + max(self.get_height(x.left), self.get_height(x.right))
+        y.height = 1 + max(self.get_height(y.left), self.get_height(y.right))
+
+        return y
+
+    def insert(self, node, key):
+        
+        if not node:
+            return Node(key)
+        elif key < node.key:
+            node.left = self.insert(node.left, key)
+        elif key > node.key:
+            node.right = self.insert(node.right, key)
+        else:
+            return node 
+
+       
+        node.height = 1 + max(self.get_height(node.left), self.get_height(node.right))
+
+        balance = self.get_balance(node)
+
+       
+        if balance > 1 and key < node.left.key:
+            return self.rotate_right(node)
+
+      
+        if balance < -1 and key > node.right.key:
+            return self.rotate_left(node)
+
+       
+        if balance > 1 and key > node.left.key:
+            node.left = self.rotate_left(node.left)
+            return self.rotate_right(node)
+
+       
+        if balance < -1 and key < node.right.key:
+            node.right = self.rotate_right(node.right)
+            return self.rotate_left(node)
+
+        return node
+
+    def delete(self, node, key):
+        
+        if not node:
+            return node
+        elif key < node.key:
+            node.left = self.delete(node.left, key)
+        elif key > node.key:
+            node.right = self.delete(node.right, key)
+        else:
+            
+            if not node.left:
+                return node.right
+            elif not node.right:
+                return node.left
+
+           
+            temp = self.get_min_value_node(node.right)
+            node.key = temp.key
+            node.right = self.delete(node.right, temp.key)
+
+       
+        node.height = 1 + max(self.get_height(node.left), self.get_height(node.right))
+
+      
+        balance = self.get_balance(node)
+
+       
+        if balance > 1 and self.get_balance(node.left) >= 0:
+            return self.rotate_right(node)
+
+       
+        if balance > 1 and self.get_balance(node.left) < 0:
+            node.left = self.rotate_left(node.left)
+            return self.rotate_right(node)
+
+        if balance < -1 and self.get_balance(node.right) <= 0:
+            return self.rotate_left(node)
+
+       
+        if balance < -1 and self.get_balance(node.right) > 0:
+            node.right = self.rotate_right(node.right)
+            return self.rotate_left(node)
+
+        return node
+
+    def get_min_value_node(self, node):
+        current = node
+        while current.left is not None:
+            current = current.left
+        return current
+
+    def inorder_traversal(self, node):
+        if not node:
+            return []
+        return self.inorder_traversal(node.left) + [node.key] + self.inorder_traversal(node.right)
+
+    def display(self, node, level=0, prefix="Root:"):
+        if node is not None:
+            print(" " * (level * 4) + prefix + f" {node.key} (H={node.height})")
+            if node.left or node.right:
+                self.display(node.left, level + 1, "L---")
+                self.display(node.right, level + 1, "R---")
+
+
+
+if __name__ == "__main__":
+    tree = AVLTree()
+    root = None
+    keys = [10, 20, 30, 40, 50, 25]
+
+    print("Inserting keys:")
+    for key in keys:
+        print(f"Inserting {key}...")
+        root = tree.insert(root, key)
+        tree.display(root)
+        print()
+
+    print("Inorder Traversal:", tree.inorder_traversal(root))
+
+    print("\nDeleting 20...")
+    root = tree.delete(root, 20)
+    tree.display(root)
+    print("Inorder Traversal:", tree.inorder_traversal(root))
+..............................................................................................................................................
