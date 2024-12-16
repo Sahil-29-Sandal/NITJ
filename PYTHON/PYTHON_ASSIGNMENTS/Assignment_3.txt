@@ -1,0 +1,83 @@
+1. Validate User Name and PAN Card Number
+python
+Copy code
+def validate_user_info():
+    name = input("Enter your name: ")
+    pan = input("Enter your PAN card number: ")
+
+    if not name.isalpha():
+        print("Invalid name. Name should only contain alphabets.")
+    elif not (pan.isalnum() and len(pan) == 10):
+        print("Invalid PAN card number. It should be 10 alphanumeric characters.")
+    else:
+        print("Name:", name)
+        print("PAN Card Number:", pan)
+
+validate_user_info()
+2. Generate an Abecedarian Series
+python
+Copy code
+def abecedarian_series():
+    n = int(input("Enter the number of elements in the series: "))
+    alphabet = 'abcdefghijklmnopqrstuvwxyz'
+    series = alphabet[:n]
+    print("Abecedarian Series:", ' '.join(series))
+
+abecedarian_series()
+3. Count Character Occurrences in a String (Without Built-in Functions)
+python
+Copy code
+def count_characters(s, char):
+    count = 0
+    for c in s:
+        if c == char:
+            count += 1
+    return count
+
+string = input("Enter a string: ")
+char = input("Enter the character to count: ")
+occurrences = count_characters(string, char)
+print(f"The character '{char}' appears {occurrences} times.")
+4. Longest Word in a List
+python
+Copy code
+def longest_word(words):
+    max_length = 0
+    longest = ""
+    for word in words:
+        if len(word) > max_length:
+            max_length = len(word)
+            longest = word
+    return max_length
+
+words = input("Enter words separated by spaces: ").split()
+print("Length of the longest word:", longest_word(words))
+5. First Half of Half of an Even-Length String
+python
+Copy code
+def first_half_of_half(s):
+    if len(s) % 2 != 0:
+        return "String length is not even."
+    return s[:len(s)//4]
+
+string = input("Enter an even-length string: ")
+print("First half of half of the string:", first_half_of_half(string))
+6. Merge Two Strings with Swapped First Two Characters
+python
+Copy code
+def swap_and_merge(s1, s2):
+    if len(s1) < 2 or len(s2) < 2:
+        return "Strings must be at least two characters long."
+    return s2[:2] + s1[2:] + " " + s1[:2] + s2[2:]
+
+str1 = input("Enter the first string: ")
+str2 = input("Enter the second string: ")
+print("Resulting string:", swap_and_merge(str1, str2))
+7. Print Floating Point Numbers with No Decimal Places
+python
+Copy code
+def print_no_decimal(number):
+    print(f"Number without decimal places: {int(number)}")
+
+number = float(input("Enter a floating-point number: "))
+print_no_decimal(number)
